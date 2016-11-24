@@ -1,0 +1,36 @@
+{
+  "name": "react-draggable-components",
+  "version": "1.0.0",
+  "description": "A showcase of draggable components created with React and react-draggable",
+  "main": "index.js",
+  "scripts": {
+    "production": "webpack -p",
+    "start": "webpack-dev-server --hot --inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeividasK/react-draggable-components.git"
+  },
+  "author": "Deividas Karžinauskas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DeividasK/react-draggable-components/issues"
+  },
+  "homepage": "https://github.com/DeividasK/react-draggable-components#readme",
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "html-webpack-plugin": "^2.22.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
