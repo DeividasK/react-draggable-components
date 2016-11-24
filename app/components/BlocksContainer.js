@@ -1,5 +1,5 @@
 import React from 'react';
-import { Block } from './Block';
+import Block from './Block';
 import { CardColumns } from 'reactstrap';
 
 export default class BlocksContainer extends React.Component {
@@ -18,9 +18,19 @@ export default class BlocksContainer extends React.Component {
   }
 
   render () {
+    if (this.state.blocks.length === 0) {
+      return (
+        <CardColumns>
+          <Block>Remove</Block>
+        </CardColumns>
+      )
+    }
+
     return (
       <CardColumns>
-        { this.state.blocks.map((block) => ( <Block key={ block.id } color={ block.color }>{ block.name }</Block> ))}
+        { this.state.blocks.map((block) => (
+          <Block key={ block.id } color={ block.color } textColor="ecf0f1">{ block.name }</Block>
+        ))}
       </CardColumns>
     );
   }

@@ -1,25 +1,27 @@
 import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
 import { ContainerTitle } from './ContainerTitle';
-import BlocksContainer from './BlocksContainer';
 import { ContainerWrapper } from './ContainerWrapper';
+import BlocksContainer from './BlocksContainer';
+import PreviewsContainer from './PreviewsContainer';
 
 export function Main () {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-sm-6">
+    <Container>
+      <Row>
+        <Col sm="6">
           <ContainerTitle>Main page</ContainerTitle>
           <ContainerWrapper>
-
+            <PreviewsContainer/>
           </ContainerWrapper>
-        </div>
-        <div className="col-sm-6">
+        </Col>
+        <Col sm="6">
           <ContainerTitle>Blocks</ContainerTitle>
           <ContainerWrapper>
-            <BlocksContainer />
+            <BlocksContainer/>
           </ContainerWrapper>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
