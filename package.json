@@ -19,7 +19,10 @@
   "homepage": "https://github.com/DeividasK/react-draggable-components#readme",
   "dependencies": {
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-addons-css-transition-group": "^15.4.1",
+    "react-addons-transition-group": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "reactstrap": "^3.9.1"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
