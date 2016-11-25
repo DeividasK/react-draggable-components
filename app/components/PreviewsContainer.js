@@ -1,27 +1,49 @@
 import React from 'react';
-import Block from './Block';
 import { Row, Col } from 'reactstrap';
+import { DropTarget } from 'react-dnd';
 
-export default class PreviewsContainer extends React.Component {
-  constructor () {
-    super();
-    this.state = {
-      blocks: [],
-      blockSize: 600
-    };
+import { ItemTypes } from '../constants';
+import Block from './Block';
+
+const previewsContainerTarget = {
+  drop(props, monitor, component) {
+    console.log('Dropped');
+    console.log(props, monitor, component);
+    console.log(monitor.getItem());
+    component.props.blocks.splice(0, 0, monitor.getItem().block)
+  }
+};
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
+
+class PreviewsContainer extends React.Component {
+
+  static propTypes = {
+    blocks: React.PropTypes.array,
+    blockSize: React.PropTypes.number
+  }
+
+  static defaultProps = {
+    blocks: [],
+    blockSize: 600
   }
 
   render () {
-    if (this.state.blocks.length === 0) {
-      return (
-        <Block size={ this.state.blockSize }>Drag a block here</Block>
-      )
-    }
+    const { connectDropTarget, isOver } = this.props;
 
-    return (
+    return connectDropTarget(
       <div>
-        { this.state.blocks.map((block) => ( <Block size={ this.state.blockSize } key={ block.id } color={ block.color }>{ block.name }</Block> ))}
+        { this.props.blocks.length === 0 && <Block size={ this.props.blockSize } textColor="95a5a6">Drag a block here</Block> }
+        { this.props.blocks.length !== 0 && isOver && <Block size={ this.props.blockSize } textColor="95a5a6">Add the block here</Block>}
+        { this.props.blocks.map((block, key) => ( <Block size={ this.props.blockSize } key={ key } color={ block.color }>{ block.name }</Block> ))}
       </div>
     );
   }
 }
+
+export default DropTarget(ItemTypes.BLOCK, previewsContainerTarget, collect)(PreviewsContainer);

@@ -4,25 +4,29 @@ import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 export default class Block extends React.Component {
 
   static propTypes = {
-    color: React.PropTypes.string.isRequired,
-    size: React.PropTypes.number
+    color: React.PropTypes.string,
+    size: React.PropTypes.number,
+    textColor: React.PropTypes.string
   }
 
   static defaultProps = {
     size: 200,
     color: 'ffffff',
-    textColor: '95a5a6'
+    textColor: 'ecf0f1'
   }
 
   render () {
+
     return (
-      <Card inverse>
-        <CardImg
-          width="100%"
-          src={ "http://placehold.it/" + this.props.size + "x200/" + this.props.color + "/" + this.props.textColor + "?text=" + this.props.children }
-          alt={ this.props.children }
-        />
-      </Card>
+      <div>
+        <Card inverse>
+          <CardImg
+            width="100%"
+            src={ "http://placehold.it/" + this.props.size + "x200/" + this.props.color + "/" + this.props.textColor + "?text=" + this.props.children }
+            alt={ this.props.children }
+          />
+        </Card>
+      </div>
     );
   }
 }
