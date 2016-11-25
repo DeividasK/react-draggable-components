@@ -24,7 +24,9 @@
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.4.1",
-    "reactstrap": "^3.9.1"
+    "react-redux": "^4.4.6",
+    "reactstrap": "^3.9.1",
+    "redux-logger": "^2.7.4"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

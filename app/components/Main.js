@@ -8,7 +8,9 @@ import { ContainerWrapper } from './ContainerWrapper';
 import BlocksContainer from './BlocksContainer';
 import PreviewsContainer from './PreviewsContainer';
 
-class Main extends React.Component {
+@DragDropContext(HTML5Backend)
+
+export default class Main extends React.Component {
   render () {
     return (
       <Container>
@@ -30,5 +32,3 @@ class Main extends React.Component {
     );
   }
 }
-
-export default DragDropContext(HTML5Backend)(Main);

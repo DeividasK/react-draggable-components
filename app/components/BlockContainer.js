@@ -1,47 +1,102 @@
 import React from 'react';
 import { CardColumns } from 'reactstrap';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
+import { connect } from 'react-redux';
 
 import { ItemTypes } from '../constants';
 import Block from './Block';
+import { Add, Drop, MovePlaceholder, DragStart, DragEnd } from '../actions/dndActions';
 
-const blockSource = {
+const dragSource = {
   beginDrag(props, monitor, component) {
-    console.log('Dragging has started');
-    // console.log(props, monitor, component)
-    return props;
+    DragStart(props.block);
+    return props.block;
   },
+//   isDragging(props, monitor) {
+//     // console.log(props, monitor);
+//     // console.log(monitor.getItem());
+//     // return true;
+// console.log('Dragging');
+//     let result = (props.id === 1);
+//     console.log(result);
+//     return result;
+//   },
+  // canDrag(props, monitor) {
+  //   console.log(props, monitor);
+  //   return true;
+  // },
   endDrag(props, monitor, component) {
-    console.log('Dragging has ended');
-    // console.log(props, monitor, component)
-    return props;
+    if ( ! monitor.didDrop()) {
+      return DragEnd();
+    }
+
+    Add({ draggable: false, name: 'Drag a block here', size: 600, textColor: "95a5a6" })
   }
 };
 
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+const dropTarget = {
+  drop(props, monitor, component) {
+    let item = { block: monitor.getItem(), key: props.blockKey };
+    Drop(item);
+    return item;
+  },
+  canDrop(props, monitor) {
+    return props.canDrop;
+  },
+  hover(props, monitor, component) {
+    if ( ! props.canDrop || props.blockKey === component.props.placeholderIndex) {
+      return;
+    }
+    console.log(props);
+    MovePlaceholder(props.blockKey);
   }
-}
+};
 
-class BlockContainer extends React.Component {
+@connect((store) => ({
+  placeholderIndex: store.previews.indexKey
+}))
+
+@DragSource(ItemTypes.BLOCK, dragSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource()
+}))
+
+@DropTarget(ItemTypes.BLOCK, dropTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver() && monitor.canDrop(),
+  draggedBlock: monitor.getItem(),
+}))
+
+export default class BlockContainer extends React.Component {
 
   static propTypes = {
     block: React.PropTypes.object.isRequired,
-    blockKey: React.PropTypes.number.isRequired
+    blockKey: React.PropTypes.number,
+    size: React.PropTypes.number,
+    textColor: React.PropTypes.string,
+    handleDrop: React.PropTypes.func
   }
 
   render () {
+    // console.log(this.props.placeholderIndex);
     const { connectDragSource, isDragging } = this.props;
+    const { connectDropTarget, isOver, draggedBlock } = this.props;
 
+    const block = this.props.block;
 
-    return connectDragSource(
+    // if (this.props.dropTarget) {
+    //   return connectDropTarget(
+    //     <div>
+    //       { ! isOver && <Block color={ block.color } size={ block.size } textColor={ block.textColor }>{ block.name }</Block> }
+    //       { isOver && <Block color={ draggedBlock.color } size={ block.size }>{ draggedBlock.name }</Block> }
+    //     </div>
+    //   );
+    // }
+
+    return connectDropTarget(connectDragSource(
       <div>
-        <Block color={ this.props.block.color }>{ this.props.block.name }</Block>
+        { ! isOver && <Block color={ block.color } size={ block.size } textColor={ block.textColor }>{ block.name }</Block> }
+        { isOver && <Block color={ draggedBlock.color } size={ block.size }>{ draggedBlock.name }</Block> }
       </div>
-    );
+    ));
   }
 }
-
-export default DragSource(ItemTypes.BLOCK, blockSource, collect)(BlockContainer);
