@@ -1,32 +1,29 @@
 import React from 'react';
-import { Card, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
+import { Card, CardTitle, CardText, CardBlock, CardSubtitle } from 'reactstrap';
 
 export default class Block extends React.Component {
 
   static propTypes = {
     color: React.PropTypes.string,
-    size: React.PropTypes.number,
-    textColor: React.PropTypes.string
+    textColor: React.PropTypes.string,
+    title: React.PropTypes.string,
+    subtitle: React.PropTypes.string,
+    hideSubtitle: React.PropTypes.bool
   }
 
   static defaultProps = {
-    size: 200,
     color: 'ffffff',
     textColor: 'ecf0f1'
   }
 
   render () {
-
     return (
-      <div>
-        <Card inverse>
-          <CardImg
-            width="100%"
-            src={ "http://placehold.it/" + this.props.size + "x200/" + this.props.color + "/" + this.props.textColor + "?text=" + this.props.children }
-            alt={ this.props.children }
-          />
-        </Card>
-      </div>
+      <Card style={{ color: '#' + this.props.textColor, backgroundColor: '#' + this.props.color, borderColor: '#333' }}>
+        <CardBlock>
+          { this.props.title && <CardTitle>{ this.props.title }</CardTitle> }
+          { ! this.props.hideSubtitle && this.props.subtitle && <CardSubtitle>{ this.props.subtitle }</CardSubtitle> }
+        </CardBlock>
+      </Card>
     );
   }
 }

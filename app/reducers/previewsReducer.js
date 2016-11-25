@@ -1,7 +1,6 @@
 export default function reducer(state = {
-    list: [
-      { name: "Drag a block here", size: 600, textColor: "95a5a6" }
-    ],
+    list: [],
+    placeholder: { id: 0, title: "Drag", subtitle: "a block here", textColor: "95a5a6" },
     indexKey: 0,
     defaultSize: 600,
     sortingEnabled: true,
@@ -17,7 +16,7 @@ export default function reducer(state = {
     }
 
     case "BLOCK_ADDED": {
-      newState.list.push(action.payload);
+      newState.list.push(newState.placeholder);
       newState.indexKey = newState.list.length - 1;
       newState.sortingEnabled = true;
       break;
@@ -32,6 +31,10 @@ export default function reducer(state = {
 
     case "DRAGGING_STARTED": {
       newState.sortingEnabled = false;
+      if ( ! action.payload.sortAction) { break; }
+      let placeholder = newState.list.splice(newState.indexKey, 1)[0];
+      newState.list.splice(action.payload.indexKey, 1, placeholder);
+      newState.indexKey = action.payload.indexKey;
       break;
     }
 

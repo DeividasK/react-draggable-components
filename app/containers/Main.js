@@ -3,14 +3,19 @@ import { Container, Row, Col } from 'reactstrap';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { ContainerTitle } from './ContainerTitle';
-import { ContainerWrapper } from './ContainerWrapper';
+import { ContainerTitle } from '../components/ContainerTitle';
+import { ContainerWrapper } from '../components/ContainerWrapper';
 import BlocksContainer from './BlocksContainer';
 import PreviewsContainer from './PreviewsContainer';
+import { AddPlaceholder } from '../actions/dndActions';
 
 @DragDropContext(HTML5Backend)
-
 export default class Main extends React.Component {
+
+  componentWillMount() {
+    AddPlaceholder();
+  }
+
   render () {
     return (
       <Container>
